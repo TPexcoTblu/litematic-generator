@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "litematic-generator",
+	"version": "${version}",
+	"name": "Litematic Generator",
+	"description": "A client-side mod that generates schematic files (.nbt) with shapes like spheres, rings, spirals, stars, and text.",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/TPexcoTblu/litematic-generator-1.21.6"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/litematic-generator/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.tpexcotblu.litematicgen.LitematicGenerator"
+		],
+		"client": [
+			"com.tpexcotblu.litematicgen.LitematicGeneratorClient"
+		]
+	},
+	"mixins": [
+		"litematic-generator.mixins.json",
+		{
+			"config": "litematic-generator.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.21.6",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
