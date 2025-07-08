@@ -6,6 +6,6 @@ import net.fabricmc.api.ClientModInitializer;
 public class LitematicGeneratorClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
-		SchemeCommandRegistrar.registerCircleCommand();
+		SchemeCommandRegistrar.registerAllCommands();
 	}
 }

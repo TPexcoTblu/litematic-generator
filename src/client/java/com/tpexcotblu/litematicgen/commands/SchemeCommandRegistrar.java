@@ -4,6 +4,7 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.tpexcotblu.litematicgen.generators.SchemeGenerator;
+import com.tpexcotblu.litematicgen.generators.SphereGenerator;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.nbt.NbtCompound;
@@ -58,7 +59,7 @@ public class SchemeCommandRegistrar {
         return 1;
     }
 
-    public static void registerCircleCommand() {
+    private static void registerCircleCommand() {
         SuggestionProvider<FabricClientCommandSource> orientationSuggestions = (context, builder) -> {
             return builder.suggest("horizontal").suggest("vertical").buildFuture();
         };
@@ -79,5 +80,25 @@ public class SchemeCommandRegistrar {
                             )
             );
         });
+    }
+
+    private static void registerSphereCommand() {
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+            dispatcher.register(
+                    literal("generatesphere")
+                            .then(argument("radius", IntegerArgumentType.integer(1, 128))
+                                    .executes(ctx -> {
+                                        int radius = IntegerArgumentType.getInteger(ctx, "radius");
+                                        SphereGenerator generator = new SphereGenerator(radius);
+                                        return saveScheme(ctx.getSource(), generator);
+                                    })
+                            )
+            );
+        });
+    }
+
+    public static void registerAllCommands() {
+        registerCircleCommand();
+        registerSphereCommand();
     }
 }
