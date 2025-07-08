@@ -6,6 +6,7 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.tpexcotblu.litematicgen.generators.ParabolaGenerator;
 import com.tpexcotblu.litematicgen.generators.SchemeGenerator;
 import com.tpexcotblu.litematicgen.generators.SphereGenerator;
+import com.tpexcotblu.litematicgen.generators.TextGenerator;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.nbt.NbtCompound;
@@ -13,9 +14,11 @@ import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.text.Text;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
@@ -116,10 +119,48 @@ public class SchemeCommandRegistrar {
         });
     }
 
+    public static void registerTextCommand() {
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+            dispatcher.register(
+                    literal("generatetext")
+                            .then(argument("fontsize", IntegerArgumentType.integer(4, 64))
+                                    .then(argument("text", StringArgumentType.greedyString())
+                                            .executes(ctx -> {
+                                                int fontSize = IntegerArgumentType.getInteger(ctx, "fontsize");
+                                                String text = StringArgumentType.getString(ctx, "text");
+
+                                                InputStream fontStream = SchemeCommandRegistrar.class.getResourceAsStream(
+                                                        "/assets/litematic-generator/fonts/Minecraftia-Regular.ttf"
+                                                );
+
+                                                if (fontStream == null) {
+                                                    ctx.getSource().sendError(Text.of("Could not find embedded font."));
+                                                    return 0;
+                                                }
+
+                                                Font font;
+                                                try {
+                                                    font = Font.createFont(Font.TRUETYPE_FONT, fontStream)
+                                                            .deriveFont(Font.PLAIN, fontSize);
+                                                } catch (Exception e) {
+                                                    ctx.getSource().sendError(Text.of("Error loading font: " + e.getMessage()));
+                                                    return 0;
+                                                }
+
+                                                var generator = new TextGenerator(text, fontSize, font);
+                                                return saveScheme(ctx.getSource(), generator);
+                                            })
+                                    )
+                            )
+            );
+        });
+    }
+
 
     public static void registerAllCommands() {
         registerCircleCommand();
         registerSphereCommand();
         registerParabolaCommand();
+        registerTextCommand();
     }
 }
