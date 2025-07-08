@@ -3,6 +3,7 @@ package com.tpexcotblu.litematicgen.commands;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
+import com.tpexcotblu.litematicgen.generators.ParabolaGenerator;
 import com.tpexcotblu.litematicgen.generators.SchemeGenerator;
 import com.tpexcotblu.litematicgen.generators.SphereGenerator;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -97,8 +98,28 @@ public class SchemeCommandRegistrar {
         });
     }
 
+    public static void registerParabolaCommand() {
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+            dispatcher.register(
+                    literal("generateparabola")
+                            .then(argument("width", IntegerArgumentType.integer(1, 256))
+                                    .then(argument("height", IntegerArgumentType.integer(1, 256))
+                                            .executes(ctx -> {
+                                                int width = IntegerArgumentType.getInteger(ctx, "width");
+                                                int height = IntegerArgumentType.getInteger(ctx, "height");
+                                                var generator = new ParabolaGenerator(width, height);
+                                                return saveScheme(ctx.getSource(), generator);
+                                            })
+                                    )
+                            )
+            );
+        });
+    }
+
+
     public static void registerAllCommands() {
         registerCircleCommand();
         registerSphereCommand();
+        registerParabolaCommand();
     }
 }
