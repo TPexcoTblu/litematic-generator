@@ -9,7 +9,7 @@
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/TPexcoTblu/litematic-generator-1.21.6"
+		"sources": "https://github.com/TPexcoTblu/litematic-generator"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/litematic-generator/icon.png",
