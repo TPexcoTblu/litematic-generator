@@ -88,3 +88,18 @@ publishing {
 		// retrieving dependencies.
 	}
 }
+
+tasks.register("copyJarAfterBuild") {
+	dependsOn build
+	doLast {
+		def source = file("${buildDir}/libs/${archivesBaseName}-${version}.jar")
+		def target = file("C:/Users/denk1/AppData/Roaming/.minecraft/mods/${archivesBaseName}-${minecraft_version}.jar")
+		copy {
+			from source
+			into target.parent
+			rename { target.name }
+		}
+		println "✅ Скопирован в: ${target}"
+	}
+}
+build.finalizedBy("copyJarAfterBuild")
