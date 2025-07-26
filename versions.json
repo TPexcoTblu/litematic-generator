@@ -1,0 +1,110 @@
+{
+    "1.21": {
+        "fabric.mod.json": {
+            "minecraft": "~1.21"
+        },
+        "gradle.properties": {
+            "minecraft_version": "1.21",
+            "yarn_mappings": "1.21+build.9",
+            "loader_version": "0.16.14",
+            "loom_version": "1.11-SNAPSHOT",
+            "fabric_version": "0.102.0+1.21"
+        }
+    },
+    "1.21.1": {
+        "fabric.mod.json": {
+            "minecraft": "~1.21.1"
+        },
+        "gradle.properties": {
+            "minecraft_version": "1.21.1",
+            "yarn_mappings": "1.21.1+build.3",
+            "loader_version": "0.16.14",
+            "loom_version": "1.11-SNAPSHOT",
+            "fabric_version": "0.116.4+1.21.1"
+        }
+    },
+    "1.21.2": {
+        "fabric.mod.json": {
+            "minecraft": "~1.21.2"
+        },
+        "gradle.properties": {
+            "minecraft_version": "1.21.2",
+            "yarn_mappings": "1.21.2+build.1",
+            "loader_version": "0.16.14",
+            "loom_version": "1.11-SNAPSHOT",
+            "fabric_version": "0.106.1+1.21.2"
+        }
+    },
+    "1.21.3": {
+        "fabric.mod.json": {
+            "minecraft": "~1.21.3"
+        },
+        "gradle.properties": {
+            "minecraft_version": "1.21.3",
+            "yarn_mappings": "1.21.3+build.2",
+            "loader_version": "0.16.14",
+            "loom_version": "1.11-SNAPSHOT",
+            "fabric_version": "0.114.1+1.21.3"
+        }
+    },
+    "1.21.4": {
+        "fabric.mod.json": {
+            "minecraft": "~1.21.4"
+        },
+        "gradle.properties": {
+            "minecraft_version": "1.21.4",
+            "yarn_mappings": "1.21.4+build.8",
+            "loader_version": "0.16.14",
+            "loom_version": "1.11-SNAPSHOT",
+            "fabric_version": "0.119.3+1.21.4"
+        }
+    },
+    "1.21.5": {
+        "fabric.mod.json": {
+            "minecraft": "~1.21.5"
+        },
+        "gradle.properties": {
+            "minecraft_version": "1.21.5",
+            "yarn_mappings": "1.21.5+build.1",
+            "loader_version": "0.16.14",
+            "loom_version": "1.11-SNAPSHOT",
+            "fabric_version": "0.128.1+1.21.5"
+        }
+    },
+    "1.21.6": {
+        "fabric.mod.json": {
+            "minecraft": "~1.21.6"
+        },
+        "gradle.properties": {
+            "minecraft_version": "1.21.6",
+            "yarn_mappings": "1.21.6+build.1",
+            "loader_version": "0.16.14",
+            "loom_version": "1.11-SNAPSHOT",
+            "fabric_version": "0.128.2+1.21.6"
+        }
+    },
+    "1.21.7": {
+        "fabric.mod.json": {
+            "minecraft": "~1.21.7"
+        },
+        "gradle.properties": {
+            "minecraft_version": "1.21.7",
+            "yarn_mappings": "1.21.7+build.8",
+            "loader_version": "0.16.14",
+            "loom_version": "1.11-SNAPSHOT",
+            "fabric_version": "0.129.0+1.21.7"
+        }
+    },
+    "1.21.8": {
+        "fabric.mod.json": {
+            "minecraft": "~1.21.8"
+        },
+        "gradle.properties": {
+            "minecraft_version": "1.21.8",
+            "yarn_mappings": "1.21.8+build.1",
+            "loader_version": "0.16.14",
+            "loom_version": "1.11-SNAPSHOT",
+            "fabric_version": "0.129.0+1.21.8"
+        }
+    }
+}
