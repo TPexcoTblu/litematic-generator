@@ -2,6 +2,8 @@ A client-side mod that generates schematic files (.nbt) with shapes like spheres
 
 [![Modrinth Downloads](https://img.shields.io/modrinth/dt/litematic-generator?style=flat&logo=modrinth&label=Modrinth%20downloads)](https://modrinth.com/mod/litematic-generator)
 
+Build all versions via `python build_versions.py` (uses `versions.json` config)
+
 ![https://cdn.modrinth.com/data/cached_images/c1b8f464debec4b8f31e40860a5e76c42e14757e.png](https://cdn.modrinth.com/data/cached_images/c1b8f464debec4b8f31e40860a5e76c42e14757e.png)
 
 ### Commands:
