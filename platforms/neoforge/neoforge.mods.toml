@@ -1,0 +1,16 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT"
+[[mods]]
+modId="litematic_generator"
+version="${modVersion}"
+displayName="Litematic Generator"
+description="Generate shapes, text and formulas as .litematic files using K in a world."
+[[dependencies.litematic_generator]]
+modId="minecraft"
+type="required"
+versionRange="[${mc}]"
+ordering="NONE"
+side="CLIENT"
+[[mixins]]
+config="litematic-generator.client.mixins.json"

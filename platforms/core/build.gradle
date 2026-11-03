@@ -1,0 +1,7 @@
+sourceSets {
+    main {
+        java.srcDir '../../src/main/java'
+        java.include 'com/tpexcotblu/litematicgen/generators/**', 'com/tpexcotblu/litematicgen/schematic/**'
+    }
+}
+tasks.withType(JavaCompile).configureEach { options.release = 21 }

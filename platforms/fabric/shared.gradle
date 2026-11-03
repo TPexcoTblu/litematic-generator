@@ -1,0 +1,59 @@
+def mc = rootProject.minecraftVersion
+def config = rootProject.targetConfig
+base.archivesName = "litematic-generator-${rootProject.targetLoader}-mc${mc}"
+repositories {
+    maven { url = 'https://maven.quiltmc.org/repository/release/' }
+    maven { url = 'https://maven.terraformersmc.com/' }
+}
+loom {
+    splitEnvironmentSourceSets()
+    mods {
+        "litematic-generator" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+    runs {
+        client {
+            runDir = rootProject.file("run/${rootProject.targetLoader}/${mc}").path
+            if (rootProject.targetLoader == 'quilt') {
+                defaultMainClass = 'org.quiltmc.loader.impl.launch.knot.KnotClient'
+                // Quilt uses loader.*, while Loom supplies fabric.* development properties.
+                vmArg '-Dloader.development=true'
+                vmArg "-Dloader.classPathGroups=${(sourceSets.main.output.files + sourceSets.client.output.files).collect { it.absolutePath }.join(File.pathSeparator)}"
+            }
+        }
+    }
+}
+dependencies {
+    minecraft "com.mojang:minecraft:${mc}"
+    if (mc.startsWith('1.')) mappings loom.officialMojangMappings()
+    implementation project(':core')
+    add(mc.startsWith('1.') ? 'modCompileOnly' : 'compileOnly', "com.terraformersmc:modmenu:${config.modmenu}") { transitive = false }
+    def loaderArtifact = rootProject.targetLoader == 'quilt' ? "org.quiltmc:quilt-loader:${config.quilt_loader}" : "net.fabricmc:fabric-loader:${config.fabric_loader}"
+    add(mc.startsWith('1.') ? 'modImplementation' : 'implementation', loaderArtifact)
+    if (rootProject.targetLoader == 'quilt') {
+        def libraries = new groovy.json.JsonSlurper().parse(file('quilt-libraries.json'))
+        libraries.each { implementation it }
+    }
+}
+sourceSets {
+    client {
+        java.srcDirs = [rootProject.file('src/sharedClient/java'), rootProject.file('src/fabricClient/java')]
+        resources.srcDirs = [rootProject.file('src/sharedClient/resources'), rootProject.file('src/main/resources')]
+        resources.exclude 'fabric.mod.json', 'litematic-generator.mixins.json'
+    }
+}
+apply from: rootProject.file('platforms/shared.gradle')
+processClientResources {
+    inputs.property('javaVersion', config.java)
+    filesMatching('litematic-generator.client.mixins.json') { expand javaVersion: config.java }
+}
+processResources {
+    inputs.properties(mc: mc, javaVersion: config.java, loaderVersion: config.fabric_loader, modVersion: project.version)
+    from(rootProject.file('platforms/fabric/fabric.mod.json')) {
+        expand mc: mc, javaVersion: config.java, loaderVersion: config.fabric_loader, modVersion: project.version
+    }
+}
+
+jar { from project(':core').sourceSets.main.output }

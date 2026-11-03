@@ -1,35 +1,35 @@
 package com.tpexcotblu.litematicgen.generators;
 
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtInt;
-import net.minecraft.nbt.NbtList;
+import com.tpexcotblu.litematicgen.schematic.SchematicVolume;
 
 public class ParabolaGenerator implements SchemeGenerator{
     private final int width;
     private final int height;
 
     public ParabolaGenerator(int width, int height) {
+        if (width < 1 || width > 256 || height < 1 || height > 256) throw new IllegalArgumentException("Invalid generator dimensions or parameters");
         this.width = width;
         this.height = height;
     }
 
     @Override
-    public NbtList generateBlocks() {
-        NbtList blocks = new NbtList();
+    public SchematicVolume generate() {
+        SchematicVolume blocks = new SchematicVolume(width + 1, height + 1, 1);
 
         double a = (double) height / Math.pow(width / 2.0, 2);
 
-        int lastX = -width / 2;
-        int lastY = (int) Math.round(height - a * lastX * lastX);
+        int lastX = 0;
+        int lastY = 0;
 
-        for (int xi = -width / 2 + 1; xi <= width / 2; xi++) {
-            double fx = a * xi * xi;
+        for (int xi = 1; xi <= width; xi++) {
+            double centered = xi - width / 2.0;
+            double fx = a * centered * centered;
             int yi = (int) Math.round(height - fx);
 
             // Брешенхем 2D
-            int x0 = lastX + width / 2;
+            int x0 = lastX;
             int y0 = lastY;
-            int x1 = xi + width / 2;
+            int x1 = xi;
             int y1 = yi;
 
             int dx = Math.abs(x1 - x0);
@@ -39,14 +39,7 @@ public class ParabolaGenerator implements SchemeGenerator{
             int err = dx - dy;
 
             while (true) {
-                NbtCompound block = new NbtCompound();
-                NbtList pos = new NbtList();
-                pos.add(NbtInt.of(x0));
-                pos.add(NbtInt.of(y0));
-                pos.add(NbtInt.of(0));
-                block.put("pos", pos);
-                block.putInt("state", 1);
-                blocks.add(block);
+                blocks.setBlock(x0, y0, 0);
 
                 if (x0 == x1 && y0 == y1) break;
 
@@ -69,17 +62,8 @@ public class ParabolaGenerator implements SchemeGenerator{
     }
 
     @Override
-    public NbtList generateSize() {
-        NbtList sizeList = new NbtList();
-        sizeList.add(NbtInt.of(width + 1));  // X
-        sizeList.add(NbtInt.of(height + 1)); // Y
-        sizeList.add(NbtInt.of(1));          // Z
-        return sizeList;
-    }
-
-    @Override
     public String getFilename() {
-        return "parabola_w" + width + "_h" + height + ".nbt";
+        return "parabola_w" + width + "_h" + height + ".litematic";
     }
 
     @Override

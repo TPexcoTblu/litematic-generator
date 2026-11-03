@@ -1,41 +1,41 @@
 {
-	"schemaVersion": 1,
-	"id": "litematic-generator",
-	"version": "${version}",
-	"name": "Litematic Generator",
-	"description": "A client-side mod that generates schematic files (.nbt) with shapes like spheres, rings, spirals, stars, and text.",
-	"authors": [
-		"TPexcoTblu"
-	],
-	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/TPexcoTblu/litematic-generator"
-	},
-	"license": "CC0-1.0",
-	"icon": "assets/litematic-generator/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"com.tpexcotblu.litematicgen.LitematicGenerator"
-		],
-		"client": [
-			"com.tpexcotblu.litematicgen.LitematicGeneratorClient"
-		]
-	},
-	"mixins": [
-		"litematic-generator.mixins.json",
-		{
-			"config": "litematic-generator.client.mixins.json",
-			"environment": "client"
-		}
-	],
-	"depends": {
-		"fabricloader": ">=0.16.14",
-		"minecraft": "~1.21.8",
-		"java": ">=21",
-		"fabric-api": "*"
-	},
-	"suggests": {
-		"another-mod": "*"
-	}
+  "schemaVersion": 1,
+  "id": "litematic-generator",
+  "version": "${version}",
+  "name": "Litematic Generator",
+  "description": "Client-side shape, text and formula generator with native .litematic export.",
+  "authors": [
+    "TPexcoTblu"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/litematic-generator",
+    "sources": "https://github.com/TPexcoTblu/litematic-generator"
+  },
+  "license": "MIT",
+  "icon": "assets/litematic-generator/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "com.tpexcotblu.litematicgen.LitematicGenerator"
+    ],
+    "client": [
+      "com.tpexcotblu.litematicgen.LitematicGeneratorClient"
+    ]
+  },
+  "mixins": [
+    "litematic-generator.mixins.json",
+    {
+      "config": "litematic-generator.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": "${minecraft_dependency}",
+    "java": ">=21",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "litematica": "*"
+  }
 }

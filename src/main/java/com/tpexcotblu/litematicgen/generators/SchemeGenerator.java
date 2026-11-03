@@ -1,10 +1,9 @@
 package com.tpexcotblu.litematicgen.generators;
 
-import net.minecraft.nbt.NbtList;
+import com.tpexcotblu.litematicgen.schematic.SchematicVolume;
 
 public interface SchemeGenerator {
-    NbtList generateBlocks();
-    NbtList generateSize();
+    SchematicVolume generate();
     String getFilename();
     String getSuccessMessage();
 }

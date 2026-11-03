@@ -1,10 +1,16 @@
 pluginManagement {
-	repositories {
-		maven {
-			name = 'Fabric'
-			url = 'https://maven.fabricmc.net/'
-		}
-		mavenCentral()
-		gradlePluginPortal()
-	}
+    repositories {
+        maven { url = 'https://maven.fabricmc.net/' }
+        maven { url = 'https://maven.neoforged.net/releases' }
+        gradlePluginPortal()
+        mavenCentral()
+    }
 }
+rootProject.name = 'litematic-generator'
+include 'core', 'platform'
+project(':core').projectDir = file('platforms/core')
+def loader = providers.gradleProperty('loader').getOrElse('fabric')
+def minecraft = providers.gradleProperty('minecraft_version').getOrElse('26.3')
+if (!(loader in ['fabric', 'quilt', 'neoforge'])) throw new GradleException("Unknown loader: ${loader}")
+project(':platform').projectDir = file(loader == 'neoforge' ? 'platforms/neoforge' : 'platforms/fabric')
+if (loader != 'neoforge') project(':platform').buildFileName = minecraft.startsWith('1.') ? 'remap.gradle' : 'build.gradle'

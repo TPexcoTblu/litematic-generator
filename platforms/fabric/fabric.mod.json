@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "litematic-generator",
+  "version": "${modVersion}",
+  "name": "Litematic Generator",
+  "description": "Generate shapes, text and formulas as .litematic files. Open in a world with K; configure the binding through Mod Menu or Controls.",
+  "authors": [
+    "TPexcoTblu"
+  ],
+  "license": "MIT",
+  "environment": "client",
+  "icon": "assets/litematic-generator/icon.png",
+  "mixins": [
+    "litematic-generator.client.mixins.json"
+  ],
+  "depends": {
+    "minecraft": "${mc}",
+    "java": ">=${javaVersion}"
+  },
+  "suggests": {
+    "litematica": "*",
+    "modmenu": "*"
+  },
+  "contact": {
+    "homepage": "https://modrinth.com/mod/litematic-generator",
+    "sources": "https://github.com/TPexcoTblu/litematic-generator"
+  },
+  "entrypoints": {
+    "modmenu": [
+      "com.tpexcotblu.litematicgen.client.ModMenuIntegration"
+    ]
+  }
+}

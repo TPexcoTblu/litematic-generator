@@ -1,0 +1,48 @@
+def generated = layout.buildDirectory.dir('generated/compat')
+def screenMethod = rootProject.targetConfig.screen_method
+def extract = rootProject.targetConfig.renderer == 'extract'
+def legacyKeyCategory = rootProject.minecraftVersion == '1.21.8'
+def currentScreenExpression = screenMethod == 'setScreenAndShow' ? 'Minecraft.getInstance().gui.screen()' : 'Minecraft.getInstance().screen'
+tasks.register('generateCompat') {
+    inputs.property('screenMethod', screenMethod)
+    inputs.property('extract', extract)
+    inputs.property('legacyKeyCategory', legacyKeyCategory)
+    outputs.dir(generated)
+    doLast {
+        def target = generated.get().file('com/tpexcotblu/litematicgen/client/MinecraftCompat.java').asFile
+        target.parentFile.mkdirs()
+        target.text = """package com.tpexcotblu.litematicgen.client;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.KeyMapping;
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.gui.screens.Screen;
+public final class MinecraftCompat {
+    public static void open(Screen screen) { Minecraft.getInstance().${screenMethod}(screen); }
+    public static Screen currentScreen() { return ${currentScreenExpression}; }
+    public static KeyMapping createOpenKey() {
+        return new KeyMapping("Litematic Generator", InputConstants.KEY_K, ${legacyKeyCategory ? '\"key.categories.misc\"' : 'KeyMapping.Category.MISC'});
+    }
+}
+"""
+        def base = generated.get().file('com/tpexcotblu/litematicgen/client/GeneratorScreenBase.java').asFile
+        // Minecraft invokes the screen background before rendering widgets on every supported version.
+        // Calling it again here applies blur twice and breaks screen opening.
+        base.text = """package com.tpexcotblu.litematicgen.client;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+public abstract class GeneratorScreenBase extends Screen {
+    protected GeneratorScreenBase(Component title) { super(title); }
+}
+"""
+    }
+}
+def clientSources = rootProject.targetLoader == 'neoforge' ? sourceSets.main : sourceSets.client
+clientSources.java.srcDir(generated)
+tasks.named(rootProject.targetLoader == 'neoforge' ? 'compileJava' : 'compileClientJava') { dependsOn 'generateCompat' }
+tasks.withType(JavaCompile).configureEach { options.release = rootProject.targetConfig.java }
+tasks.withType(Jar).configureEach {
+    from(rootProject.file('LICENSE'))
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.named('sourcesJar') { dependsOn 'generateCompat'; from project(':core').sourceSets.main.allSource }

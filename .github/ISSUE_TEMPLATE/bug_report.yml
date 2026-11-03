@@ -1,0 +1,30 @@
+name: Bug report
+description: Report a crash, generation error or compatibility problem.
+body:
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Exact Minecraft, loader (including loader version) and Litematic Generator versions.
+      placeholder: Minecraft 26.3, Quilt 0.30.2, Litematic Generator 2.0.0-dev
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include shape settings or the exact formula, and any relevant optional mods.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log excerpt or crash report
+      description: Remove private information before posting.
+      render: text

@@ -1,0 +1,23 @@
+plugins { id 'net.neoforged.moddev' version '2.0.148' }
+def config = rootProject.targetConfig
+if (!config.neoforge) throw new GradleException("No NeoForge build available for ${rootProject.minecraftVersion}")
+base.archivesName = "litematic-generator-neoforge-mc${rootProject.minecraftVersion}"
+neoForge {
+    version = config.neoforge
+    runs { client { client(); gameDirectory = rootProject.file("run/neoforge/${rootProject.minecraftVersion}") } }
+    mods { litematic_generator { sourceSet sourceSets.main } }
+}
+dependencies { implementation project(':core') }
+sourceSets.main {
+    java.srcDirs = [rootProject.file('src/sharedClient/java'), rootProject.file('src/neoforge/java')]
+    resources.srcDirs = [rootProject.file('src/sharedClient/resources'), rootProject.file('src/main/resources')]
+    resources.exclude 'fabric.mod.json', 'litematic-generator.mixins.json'
+}
+apply from: rootProject.file('platforms/shared.gradle')
+processResources {
+    inputs.property('javaVersion', config.java)
+    filesMatching('litematic-generator.client.mixins.json') { expand javaVersion: config.java }
+    inputs.properties(mc: rootProject.minecraftVersion, modVersion: project.version)
+    from('neoforge.mods.toml') { into 'META-INF'; expand mc: rootProject.minecraftVersion, modVersion: project.version }
+}
+jar { from project(':core').sourceSets.main.output }

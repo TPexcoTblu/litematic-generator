@@ -1,0 +1,2 @@
+plugins { id 'net.fabricmc.fabric-loom' version '1.19.3' }
+apply from: 'shared.gradle'

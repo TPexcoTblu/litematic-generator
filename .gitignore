@@ -32,3 +32,30 @@ Thumbs.db
 # === JVM Crash Logs ===
 hs_err_pid*
 replay_pid*
+
+# Version matrix output and Python bytecode
+builds/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Local environment and editor state
+.env
+.env.*
+!.env.example
+.classpath
+.project
+.settings/
+*.code-workspace
+*.swp
+*.swo
+*~
+
+# Generated Minecraft schematics and development worlds
+schematics/
+saves/
+crash-reports/
+*.litematic
+*.nbt

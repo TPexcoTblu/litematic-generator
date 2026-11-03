@@ -1,0 +1,17 @@
+name: Feature request
+description: Suggest a generator, workflow improvement or integration.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What would you like to create or improve?
+      description: Describe the use case and how you currently handle it.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested behavior
+      description: Include an example, sketch or formula if useful.
+    validations:
+      required: true
