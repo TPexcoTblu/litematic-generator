@@ -1,5 +1,6 @@
 # Litematic Generator
 
+[![Modrinth Downloads](https://img.shields.io/modrinth/dt/litematic-generator?style=flat&logo=modrinth&label=Modrinth%20downloads)](https://modrinth.com/mod/litematic-generator)
 [![Build](https://github.com/TPexcoTblu/litematic-generator/actions/workflows/build.yml/badge.svg)](https://github.com/TPexcoTblu/litematic-generator/actions/workflows/build.yml)
 [Modrinth](https://modrinth.com/mod/litematic-generator) · [Changelog](CHANGELOG.md) · [Test results](TESTING.md) · [Report a bug](https://github.com/TPexcoTblu/litematic-generator/issues)
 
